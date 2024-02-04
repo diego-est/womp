@@ -9,9 +9,28 @@
  * ======================================================================== */
 #include "global.hpp"
 #include "WCompositor.hpp"
+#include "WSurface.hpp"
 #include "prelude.hpp"
 
 fn G::scene() noexcept -> Handle<LScene>
 {
 	return &compositor()->scene;
+}
+
+void G::moveSurfaceWithChildren(Handle<WSurface> surface, Handle<LView> parent,
+				subSurfacesOnly sso) noexcept
+{
+	surface->view.setParent(parent);
+	var next = surface;
+
+	if (sso == subSurfacesOnly::on) {
+		while ((next = Handle<WSurface>(next->nextSurface())))
+			if (next->isSubchildOf(surface) and
+			    next->subsurface() != nullptr)
+				next->view.setParent(parent);
+	} else {
+		while ((next = Handle<WSurface>(next->nextSurface())))
+			if (next->isSubchildOf(surface))
+				next->view.setParent(parent);
+	}
 }

@@ -23,7 +23,8 @@ class WCompositor : public LCompositor {
 
 	// virtual constructors
 	fn createOutputRequest() noexcept -> Handle<LOutput> override;
-	fn createSurfaceRequest(Handle<LSurface::Params> params) noexcept -> Handle<LSurface> override;
+	fn createSurfaceRequest(Handle<LSurface::Params> params) noexcept
+	    -> Handle<LSurface> override;
 
 	// scene and layers
 	LScene scene;

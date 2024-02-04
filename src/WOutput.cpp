@@ -9,6 +9,7 @@
  * ======================================================================== */
 #include "WOutput.hpp"
 #include "WCompositor.hpp"
+#include "WSurface.hpp"
 #include "WTopBar.hpp"
 #include "global.hpp"
 #include "prelude.hpp"
@@ -91,6 +92,15 @@ void WOutput::paintGL() noexcept
 
 void WOutput::uninitializeGL() noexcept
 {
+	/*
+	 * set minimized output to nullptr to prevent the compositor from
+	 * crashing when a surface is unminimized and
+	 * WSurface::minimizeChanged() is triggered
+	 */
+	for (let surface : G::surfaces())
+		if (surface->minimizedOutput == this)
+			surface->minimizedOutput = nullptr;
+
 	G::scene()->handleUninitializeGL(this);
 
 	if (wallpaperView->texture())

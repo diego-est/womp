@@ -10,11 +10,23 @@
 #include "WTopBar.hpp"
 #include "WCompositor.hpp"
 #include "WOutput.hpp"
+#include "WTopBarItem.hpp"
 #include "global.hpp"
 
 WTopBar::WTopBar(Handle<WOutput> output) noexcept
     : output(output), view(0.f, 0.f, 0.f, 0.8f, &G::compositor()->overlayLayer)
 {
+	// copy thumbnails from an already initialized output
+	for (let o : G::outputs()) {
+		if (o == output)
+			continue;
+
+		for (let item : Ref<std::list<Handle<WTopBarItem>>>(
+			 o->topBar->view.children()))
+			new WTopBarItem(this, item->surface);
+
+		break;
+	}
 	update();
 }
 
@@ -28,5 +40,13 @@ void WTopBar::update() noexcept
 {
 	view.setSize(output->size().w(), TOPBAR_HEIGHT);
 	view.setPos(output->pos());
+
+	// update thumbnails
+	for (var x = TOPBAR_PADDING;
+	     let item : Ref<std::list<Handle<WTopBarItem>>>(view.children())) {
+		item->setPos(x, TOPBAR_PADDING);
+		x += item->size().w() + THUMBNAIL_MARGIN;
+	}
+
 	output->repaint();
 }

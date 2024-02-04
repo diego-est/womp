@@ -5,7 +5,7 @@
  *  GitHub Repo:  https://github.com/diego-est/womp
  *       Author:  Diego A. Estrada Rivera
  *      License:  GPL-3.0
- *      Version:  0.1.0
+ *      Version:  0.2.0
  *
  * ======================================================================== */
 #include "WCompositor.hpp"

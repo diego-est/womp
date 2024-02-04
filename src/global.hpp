@@ -12,11 +12,18 @@
 #include <LCompositor.h>
 
 #define TOPBAR_HEIGHT 32
+#define TOPBAR_PADDING 4
+#define THUMBNAIL_MARGIN 4
+#define THUMBNAIL_HEIGHT (TOPBAR_HEIGHT - 2 * TOPBAR_PADDING)
+
+// avoid bool in moveSurfaceWithChildren
+enum class subSurfacesOnly { off, on };
 
 using namespace Louvre;
 
 class WCompositor;
 class WOutput;
+class WSurface;
 
 class G {
       public:
@@ -32,4 +39,16 @@ class G {
 	}
 
 	fn static scene() noexcept -> Handle<LScene>;
+
+	// cast the LCompositor::surfaces() from LSurface to WSurface
+	fn static inline surfaces() noexcept -> Ref<std::list<Handle<WSurface>>>
+	{
+		return Ref<std::list<Handle<WSurface>>>(
+		    LCompositor::compositor()->surfaces());
+	}
+
+	// move surface views with children
+	static void moveSurfaceWithChildren(
+	    Handle<WSurface> surface, Handle<LView> parent,
+	    subSurfacesOnly opt = subSurfacesOnly::off) noexcept;
 };

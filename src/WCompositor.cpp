@@ -51,7 +51,8 @@ fn WCompositor::createOutputRequest() noexcept -> Handle<LOutput>
 {
 	return new WOutput;
 }
-fn WCompositor::createSurfaceRequest(Handle<LSurface::Params> params) noexcept -> Handle<LSurface>
+fn WCompositor::createSurfaceRequest(Handle<LSurface::Params> params) noexcept
+    -> Handle<LSurface>
 {
 	return new WSurface(params);
 }
