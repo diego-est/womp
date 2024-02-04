@@ -1,0 +1,5 @@
+- [ ] Change binary from `louvre-example` to `womp`
+- [ ] Support for tiling
+- [ ] Support for removing window decorations
+- [ ] Support for customizing top bar
+- [ ] Support for user configuration
