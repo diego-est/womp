@@ -29,3 +29,6 @@
 
 # Build directory
 /build
+
+# clangd cache dir
+/.cache
