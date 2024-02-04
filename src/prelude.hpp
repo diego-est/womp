@@ -4,30 +4,25 @@
  *  Description:  C++ sensible prelude - Declarations
  *       Author:  Diego A. Estrada Rivera
  *      Version:  0.0.4
+ *      License:  GPL-3.0
  *
  * ======================================================================== */
 #pragma once
 
 /* === Generic includes === */
-#ifndef CONTAINERS
-	#include <unordered_map>
-	#include <unordered_set>
-	#include <queue>
-	#include <stack>
-	#include <list>
-	#include <span>
-#endif
+#include <list>
+#include <queue>
+#include <span>
+#include <stack>
+#include <unordered_map>
+#include <unordered_set>
 
-#ifndef ALGORITHMS
-	#include <algorithm>
-	#include <ranges>
-	#include <numeric>
-#endif
+#include <algorithm>
+#include <numeric>
+// #include <ranges>
 
-#ifndef IO
-	#include <fstream>
-	#include <format>
-#endif
+#include <format>
+#include <fstream>
 
 /* === Numeric Types === */
 #include <cstdint>
@@ -44,15 +39,15 @@ static_assert(sizeof(F32) * CHAR_BIT == 32); //
 typedef double F64;
 static_assert(sizeof(F64) * CHAR_BIT == 64);
 #if __float80_max < __float128_max
-	typedef __float80 F80; // sometimes is the same as F128
+typedef __float80 F80; // sometimes is the same as F128
 #endif
 typedef __float128 F128;
 
 // decimal floating points
 // see decimal32/64/128 in https://en.wikipedia.org/wiki/IEEE_754
-typedef float __attribute__((mode(SD))) D32;
-typedef float __attribute__((mode(DD))) D64;
-typedef float __attribute__((mode(TD))) D128;
+// typedef float __attribute__((mode(SD))) D32;
+// typedef float __attribute__((mode(DD))) D64;
+// typedef float __attribute__((mode(TD))) D128;
 
 /* Integer */
 typedef uint8_t U8;
@@ -73,7 +68,7 @@ typedef int_fast32_t Int;
 /* === Other Types === */
 typedef bool Bool;
 typedef char Char;
-typedef const char * CString;
+typedef const char* CString;
 
 #include <vector>
 template <typename T> using Vector = std::vector<T>;
@@ -109,7 +104,9 @@ struct ignore_t {
 	template <typename T>
 	constexpr // required since C++14
 	    void
-	    operator = (T&&) const noexcept {}
+	    operator=(T&&) const noexcept
+	{
+	}
 };
 } // namespace detail
 inline constinit const detail::ignore_t ignore; // changed to constinit
@@ -120,11 +117,12 @@ inline constinit const detail::ignore_t ignore; // changed to constinit
 #define thr std::get<2>
 
 /* === Miscellaneous Functions */
-template <class D, class C>
-fn memoize(let& op) noexcept
+template <class D, class C> fn memoize(let& op) noexcept
 {
 	static var mp = std::unordered_map<D, C>();
-	return [=](D const& x) noexcept { return mp.contains(x)? mp.at(x) : mp[x] = op(x); };
+	return [=](D const& x) noexcept {
+		return mp.contains(x) ? mp.at(x) : mp[x] = op(x);
+	};
 }
 
 /* Sensible IO */
