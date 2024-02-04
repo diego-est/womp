@@ -4,7 +4,7 @@ Welcome to the W Compositor for Wayland or better known as **Womp**!
 
 ## Features
 
-- Written entirely in C++.
+- Written entirely in C++ using the [Louvre Framework](https://cuarzosoftware.github.io/Louvre/) (this is super cool btw).
 - Built-in top bar for minimized apps.
 - Basically a glorified Kiosk.
 
