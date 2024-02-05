@@ -23,6 +23,8 @@ WTopBarItem::WTopBarItem(Handle<WTopBar> topBar,
 	setBufferScale(2);
 	enableParentOpacity(false);
 	topBar->update();
+
+	enableInput(true);
 }
 
 WTopBarItem::~WTopBarItem()
@@ -30,4 +32,12 @@ WTopBarItem::~WTopBarItem()
 	surface->topBarItems.erase(surfaceLink);
 	setParent(nullptr);
 	topBar->update();
+}
+
+void WTopBarItem::pointerButtonEvent(LPointer::Button button,
+				     LPointer::ButtonState state) noexcept
+{
+	if (button == LPointer::Button::Left and
+	    state == LPointer::ButtonState::Released)
+		surface->setMinimized(false);
 }

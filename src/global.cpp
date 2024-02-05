@@ -18,12 +18,12 @@ fn G::scene() noexcept -> Handle<LScene>
 }
 
 void G::moveSurfaceWithChildren(Handle<WSurface> surface, Handle<LView> parent,
-				subSurfacesOnly sso) noexcept
+				SubSurfacesOnly opt) noexcept
 {
 	surface->view.setParent(parent);
 	var next = surface;
 
-	if (sso == subSurfacesOnly::on) {
+	if (opt == SubSurfacesOnly::on) {
 		while ((next = Handle<WSurface>(next->nextSurface())))
 			if (next->isSubchildOf(surface) and
 			    next->subsurface() != nullptr)

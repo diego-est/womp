@@ -9,6 +9,7 @@
  * ======================================================================== */
 #include "WCompositor.hpp"
 #include "WOutput.hpp"
+#include "WPointer.hpp"
 #include "WSurface.hpp"
 #include "prelude.hpp"
 #include <LOutput.h>
@@ -55,4 +56,10 @@ fn WCompositor::createSurfaceRequest(Handle<LSurface::Params> params) noexcept
     -> Handle<LSurface>
 {
 	return new WSurface(params);
+}
+
+fn WCompositor::createPointerRequest(Handle<LPointer::Params> params) noexcept
+    -> Handle<LPointer>
+{
+	return new WPointer(params);
 }

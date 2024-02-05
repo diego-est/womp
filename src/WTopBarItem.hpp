@@ -22,6 +22,9 @@ class WTopBarItem : public LTextureView {
 	WTopBarItem(Handle<WTopBar> topBar, Handle<WSurface> surface) noexcept;
 	~WTopBarItem();
 
+	void pointerButtonEvent(LPointer::Button button,
+				LPointer::ButtonState state) noexcept override;
+
 	std::list<Handle<WTopBarItem>>::iterator surfaceLink;
 
 	Handle<WTopBar> topBar = nullptr;

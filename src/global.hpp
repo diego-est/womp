@@ -16,9 +16,6 @@
 #define THUMBNAIL_MARGIN 4
 #define THUMBNAIL_HEIGHT (TOPBAR_HEIGHT - 2 * TOPBAR_PADDING)
 
-// avoid bool in moveSurfaceWithChildren
-enum class subSurfacesOnly { off, on };
-
 using namespace Louvre;
 
 class WCompositor;
@@ -46,9 +43,11 @@ class G {
 		return Ref<std::list<Handle<WSurface>>>(
 		    LCompositor::compositor()->surfaces());
 	}
+	// avoid bool in moveSurfaceWithChildren
+	enum class SubSurfacesOnly { off, on };
 
 	// move surface views with children
 	static void moveSurfaceWithChildren(
 	    Handle<WSurface> surface, Handle<LView> parent,
-	    subSurfacesOnly opt = subSurfacesOnly::off) noexcept;
+	    SubSurfacesOnly opt = SubSurfacesOnly::off) noexcept;
 };

@@ -199,7 +199,7 @@ void WSurface::capture(Handle<LSceneView> sceneView)
 	 * Add the view and any child subsurface view to the scene. Notice that
 	 * we exclude child surfaces with the popup or toplevel roles.
 	 */
-	G::moveSurfaceWithChildren(this, sceneView, subSurfacesOnly::on);
+	G::moveSurfaceWithChildren(this, sceneView, G::SubSurfacesOnly::on);
 	sceneView->render();
 
 	// restore views to the surface layer
