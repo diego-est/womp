@@ -29,5 +29,7 @@ class WOutput : public LOutput {
 	std::unique_ptr<LTextureView> wallpaperView;
 	void updateWallpaper() const noexcept;
 
+	void damageRenderingTest() noexcept;
+
 	std::unique_ptr<WTopBar> topBar;
 };
