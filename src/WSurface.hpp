@@ -27,7 +27,7 @@ class WSurface : public LSurface {
 	void minimizedChanged() noexcept override;
 
 	// return the output where the surface is currently the most visible
-	fn primaryOutput() const noexcept -> Handle<WOutput>;
+	fn findPrimaryOutput() const noexcept -> Handle<WOutput>;
 
 	// take a snapshot of the surface, including its subsurfaces
 	void capture(Handle<LSceneView> sceneView);

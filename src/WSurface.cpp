@@ -88,9 +88,12 @@ void WSurface::minimizedChanged() noexcept
 		return;
 	}
 
+	/*
+	 * would be nice if this piece of code was more expressive
+	 * (functions?) TODO
+	 */
 	if (minimized()) {
-		// find the output where the surface is currently most visible
-		minimizedOutput = primaryOutput();
+		minimizedOutput = findPrimaryOutput();
 
 		if (minimizedOutput != nullptr) {
 			/*
@@ -136,7 +139,7 @@ void WSurface::minimizedChanged() noexcept
 		while (not topBarItems.empty())
 			delete topBarItems.front();
 
-		// restory back the previous unminimized position
+		// restore back the previous unminimized position
 		setPos(minimizedOutput->pos() +
 		       (prevMinimizedPos * minimizedOutput->size()));
 		minimizedOutput = nullptr;
@@ -147,7 +150,7 @@ void WSurface::minimizedChanged() noexcept
 	}
 }
 
-fn WSurface::primaryOutput() const noexcept -> Handle<WOutput>
+fn WSurface::findPrimaryOutput() const noexcept -> Handle<WOutput>
 {
 	var bestOutput = Handle<WOutput>(nullptr);
 	var bestArea = 0;

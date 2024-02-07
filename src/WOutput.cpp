@@ -77,16 +77,6 @@ void WOutput::paintGL() noexcept
 		G::compositor()->softwareCursor.setVisible(cursor()->visible());
 	}
 	topBar->update();
-	// start test for efficient rendering
-	/*
-	painter()->clearScreen();
-	G::scene()->handlePaintGL(this);
-
-	var damage = LRegion();
-	damage.addRect(rect());
-	setBufferDamage(damage);
-	*/
-	// end test for efficient rendering
 	G::scene()->handlePaintGL(this);
 }
 
@@ -130,33 +120,7 @@ void WOutput::updateWallpaper() const noexcept
 		return;
 	}
 
-	/*
-	 * This section calculates the source wallpaper rect that needs to be
-	 * copied and scaled to cover the entire output while maintaining the
-	 * image's aspect ratio
-	 */
-
-	// define the source rect within the texture to clip
-	var srcRect = LRect(0);
-
-	let scaledWidth =
-	    F32(size().w() * originalWallpaper->sizeB().h()) / F32(size().h());
-
-	// if the scaled width is greater than or equal to the output's width,
-	// we clip the texture's left and right sides.
-	if (scaledWidth >= originalWallpaper->sizeB().w()) {
-		srcRect.setH(originalWallpaper->sizeB().h());
-		srcRect.setW((originalWallpaper->sizeB().h() * size().w()) /
-			     size().h());
-		srcRect.setY((originalWallpaper->sizeB().w() - srcRect.w()) /
-			     2.0);
-	} else { // otherwise clip the texture's top and bottom sides
-		srcRect.setW(originalWallpaper->sizeB().w());
-		srcRect.setH(originalWallpaper->sizeB().h() * size().h() /
-			     size().w());
-		srcRect.setY((originalWallpaper->sizeB().h() - srcRect.h()) /
-			     2.0);
-	}
+	let srcRect = calculateWallpaperRect(originalWallpaper->sizeB());
 
 	// copy the srcRect of the originall wallpaper and scale it to match the
 	// output buffer size
@@ -168,4 +132,38 @@ void WOutput::updateWallpaper() const noexcept
 	// delete the original wallpaper texture since we are using the scaled
 	// copy
 	wallpaperView->setPos(pos());
+}
+
+void WOutput::damageRenderingTest() noexcept
+{
+	painter()->clearScreen();
+	G::scene()->handlePaintGL(this);
+
+	var damage = LRegion();
+	damage.addRect(rect());
+	setBufferDamage(damage);
+}
+fn WOutput::calculateWallpaperRect(
+    LSize const& originalWallpaperSize) const noexcept -> LRect
+{
+	var srcRect = LRect(0);
+
+	let scaledWidth =
+	    F32(size().w() * originalWallpaperSize.h()) / F32(size().h());
+
+	// if the scaled width is greater than or equal to the output's width,
+	// we clip the texture's left and right sides.
+	if (scaledWidth >= originalWallpaperSize.w()) {
+		srcRect.setH(originalWallpaperSize.h());
+		srcRect.setW((originalWallpaperSize.h() * size().w()) /
+			     size().h());
+		srcRect.setY((originalWallpaperSize.w() - srcRect.w()) / 2.0);
+	} else { // otherwise clip the texture's top and bottom sides
+		srcRect.setW(originalWallpaperSize.w());
+		srcRect.setH(originalWallpaperSize.h() * size().h() /
+			     size().w());
+		srcRect.setY((originalWallpaperSize.h() - srcRect.h()) / 2.0);
+	}
+
+	return srcRect;
 }

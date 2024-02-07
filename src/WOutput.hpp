@@ -31,5 +31,8 @@ class WOutput : public LOutput {
 
 	void damageRenderingTest() noexcept;
 
+	fn calculateWallpaperRect(
+	    LSize const& originalWallpaperSize) const noexcept -> LRect;
+
 	std::unique_ptr<WTopBar> topBar;
 };

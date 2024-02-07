@@ -26,6 +26,7 @@ void WKeyboard::keyEvent(U32 keyCode, KeyState keyState) noexcept
 {
 	sendKeyEvent(keyCode, keyState);
 
+	/* === TODO: refactor this monstrosity === */
 	let L_CTRL = isKeyCodePressed(KEY_LEFTCTRL);
 	let L_SHIFT = isKeyCodePressed(KEY_LEFTSHIFT);
 	let mods = isKeyCodePressed(KEY_LEFTALT) && L_CTRL;
