@@ -3,3 +3,4 @@
 - [ ] Support for removing window decorations
 - [ ] Support for customizing top bar
 - [ ] Support for user configuration
+- [ ] `rg TODO src`
