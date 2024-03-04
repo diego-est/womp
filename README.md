@@ -1,3 +1,5 @@
+Moved to [SourceHut](https://git.sr.ht/~diego-est/womp)
+
 # W Compositor
 
 Welcome to the W Compositor for Wayland or better known as **Womp**!
